@@ -393,6 +393,15 @@ send_to_telegram() {
     local chat_id="$1"
     local message="$2"
     local response
+
+    # --- Send the attached image first ---
+    curl -s -X POST \
+        "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto" \
+        -F "chat_id=${chat_id}" \
+        -F "photo=@photo_2025-11-03_21-55-08.jpg" \
+        -F "caption=GCP Lab Screenshot" > /dev/null
+
+    # --- Then send the message ---
     local keyboard=$(cat << EOF
 {
     "inline_keyboard": [[
